@@ -1,0 +1,12 @@
+a {
+  text-decoration: none;
+}
+.callUs{
+  display: none;
+}
+
+@media screen and (min-width: 724px){
+  .callUs{
+    display: inline;
+  }
+}

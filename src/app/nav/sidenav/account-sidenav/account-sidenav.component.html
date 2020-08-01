@@ -1,0 +1,88 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <!-- parson & name -->
+    <div class="col-12 p-0 m-0 bg-light">
+      <!-- account -->
+      <!-- expansion -->
+      <mat-expansion-panel class="w-100 h-100">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="d-flex justify-content-start align-items-center p-2">
+              <!-- person / profile image -->
+              <div class="d-flex justify-content-start align-items-center">
+                <!-- person -->
+                <mat-icon *ngIf="!isAuth">person</mat-icon>
+                <!-- profile image -->
+                <img [src]="user?.image?.picture || '../../../../assets/icon/profile-icon.png'"
+                     *ngIf="isAuth && user"
+                     alt="profile-image"
+                     class="rounded-circle border profile-image">
+              </div>
+              <!-- name / login & singup  -->
+              <div class="d-flex justify-content-start align-items-center pl-2">
+                <p *ngIf="isAuth" class="p-0 m-0">{{user?.name}}</p>
+                <a *ngIf="!isAuth" class="p-0 m-0">Login & Singup</a>
+              </div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- content mat expansion -->
+        <div class="p-0 m-0">
+          <mat-chip-list>
+            <!-- login -->
+            <mat-chip class="w-100 px-3"
+                      routerLink="/login"
+                      *ngIf="!isAuth"
+                      [appBg]="'brown'"
+                      [appText]="'white'"
+                      (click)="sidenavClose.emit()">
+              <mat-icon>input</mat-icon>
+              <span class="pl-2">login</span>
+            </mat-chip>
+            <!-- signup -->
+            <mat-chip class="w-100 px-3"
+                      routerLink="/signup"
+                      *ngIf="!isAuth"
+                      [appBg]="'brown'"
+                      [appText]="'white'"
+                      (click)="sidenavClose.emit()">
+              <mat-icon>art_track</mat-icon>
+              <span class="pl-2">signup</span>
+            </mat-chip>
+            <!-- profile -->
+            <mat-chip class="w-100 px-3"
+                      routerLink="/profile"
+                      *ngIf="isAuth"
+                      [appBg]="'brown'"
+                      [appText]="'white'"
+                      (click)="sidenavClose.emit()">
+              <mat-icon>person</mat-icon>
+              <span class="pl-2">profile</span>
+            </mat-chip>
+            <!-- change password -->
+            <mat-chip class="w-100 px-3"
+                      routerLink="/change-password"
+                      *ngIf="isAuth"
+                      [appBg]="'brown'"
+                      [appText]="'white'"
+                      (click)="sidenavClose.emit()">
+              <mat-icon>vpn_key</mat-icon>
+              <span class="pl-2">change password</span>
+            </mat-chip>
+            <!-- logout -->
+            <mat-chip class="w-100 px-3"
+                      *ngIf="isAuth"
+                      [appBg]="'brown'"
+                      [appText]="'white'"
+                      (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span class="pl-2">logout</span>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+        <!-- end mat expansion -->
+      </mat-expansion-panel>
+      <!-- expansion end -->
+    </div>
+  </div>
+</div>

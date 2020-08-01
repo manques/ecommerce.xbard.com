@@ -1,0 +1,213 @@
+<!-- <app-message *ngIf="response" [response] ="response"></app-message> -->
+<div *ngIf="!response && !isSpinner" class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <div class="col-12 p-0 m-0">
+      <!-- start -->
+      <div class="d-flex justify-content-center p-3">
+       <mat-card class="{{isFullWidth ? 'fullWidth': 'cardWidth'}} p-3">
+         <h2 class="text-center">Signup</h2>
+         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <!-- name -->
+          <div class="d-flex justify-content-center p-0 m-0">
+            <mat-form-field class="w-100 inputSize" appearance="outline">
+              <!-- label -->
+              <mat-label>name</mat-label>
+              <!-- prefix icon -->
+              <mat-icon matPrefix color="primary">person</mat-icon>
+              <!-- input name -->
+              <input type="text"
+                     matInput
+                     formControlName="name"
+                     spellcheck="false"
+                     autocomplete="off"
+                    >
+              <!-- validators check -->
+              <mat-icon
+                        *ngIf="fg.name.valid"
+                        [appText]="'green'"
+                        matSuffix
+                        >
+                        check_circle
+              </mat-icon>
+              <mat-error *ngIf="fg.name.invalid">
+                name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- email -->
+          <div class="d-flex justify-content-center p-0 m-0">
+            <mat-form-field appearance="outline" class="w-100 inputSize">
+              <!-- label -->
+              <mat-label>email</mat-label>
+              <!-- input icon -->
+              <mat-icon matPrefix
+                        color="primary">
+                email
+              </mat-icon>
+              <!-- input -->
+              <input type="text" matInput
+                     formControlName="email"
+                     spellcheck="false"
+                     autocomplete="off"
+                     >
+              <!-- check -->
+              <mat-icon *ngIf="fg.email.valid"
+                        matSuffix
+                        [appText]="'green'">
+                check_circle
+              </mat-icon>
+              <!-- error -->
+              <mat-error *ngIf="fg.email.invalid">
+                email is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- phone -->
+          <div class="d-flex justify-content-center p-0 m-0">
+            <mat-form-field appearance="outline" class="w-100 inputSize">
+              <!-- label -->
+              <mat-label>phone</mat-label>
+              <!-- input icon -->
+              <mat-icon matPrefix color="primary">phone</mat-icon>
+              <!-- input -->
+              <input type="text"
+                    matInput
+                    spellcheck="false"
+                    autocomplete="off"
+                    formControlName="phone">
+              <!-- check -->
+              <mat-icon matSuffix
+                        [appText]="'green'"
+                        *ngIf="fg.phone.valid && isNumber">
+                check_circle
+              </mat-icon>
+              <!-- error -->
+              <mat-error *ngIf="fg.phone.invalid && !isNumber">
+                phone is required(must be digits)
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- password  -->
+           <div class="d-flex justify-content-center p-0 m-0">
+            <mat-form-field appearance="outline" class="w-100 inputSize">
+              <!-- label -->
+              <mat-label>password</mat-label>
+              <!-- prefix, icon -->
+              <mat-icon matPrefix
+                        color="primary"
+                        (click)="isPassword = !isPassword">
+                        {{isPassword ? 'visibility_off': 'visibility'}}
+              </mat-icon>
+              <!-- input -->
+              <input
+                     matInput
+                    [type]="isPassword ? 'password' : 'text'"
+                     formControlName="password">
+              <!-- check -->
+              <mat-icon
+                        *ngIf="fg.password.valid"
+                        [appText]="'green'"
+                        matSuffix>
+               check_circle
+              </mat-icon>
+              <!-- hint -->
+              <mat-hint align="start" *ngIf="fg.password.invalid
+                               && fg.password.dirty">
+                password must be at least 6 characters long.
+              </mat-hint>
+              <mat-hint align="end"
+                        *ngIf="fg.password.invalid
+                               && fg.password.dirty">
+                {{fg.password.value.length}} / 6
+              </mat-hint>
+              <!-- error -->
+              <mat-error *ngIf="fg.password.invalid">
+                password is required(at least 6 characters)
+              </mat-error>
+            </mat-form-field>
+           </div>
+           <!-- confirm password -->
+           <div class="d-flex justify-content-center p-0 m-0">
+             <mat-form-field class="w-100 inputSize" appearance="outline">
+                <!-- label -->
+                <mat-label>confirm password</mat-label>
+                <!-- input icon -->
+                <mat-icon color="primary"
+                          matPrefix
+                          (click)="isConfirmPassword = !isConfirmPassword">
+                  {{!isConfirmPassword ? 'visibility' : 'visibility_off'}}
+                </mat-icon>
+                <!-- input -->
+                <input [type]="isConfirmPassword ? 'password' : 'text' "
+                        matInput
+                        formControlName="confirmPassword">
+                <!-- check -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="fg.confirmPassword.valid && onMatch">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="fg.confirmPassword.invalid && !onMatch">
+                  password is not match
+                </mat-error>
+             </mat-form-field>
+           </div>
+           <!-- isSeller -->
+           <div class="d-flex justify-content-center pb-2">
+             <mat-checkbox formControlName="isSeller"></mat-checkbox><span class="pl-2">isSeller</span>
+           </div>
+           <!-- submit button -->
+           <div class="d-flex justify-content-center pb-2">
+              <button class="w-100"
+              type="submit"
+              mat-raised-button
+              color="primary"
+              [disabled]="signupForm.invalid || (!onMatch || !isNumber)">
+              signup
+              </button>
+           </div>
+          <!-- end -->
+         </form>
+       </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="response" class="container-fluid">
+  <div class="row">
+    <div class="col-12 py-5">
+      <!-- success  -->
+      <div *ngIf="response.success">
+        <h1 class="text-center text-success" *ngFor="let mess of response.message.split('-')">
+          {{mess}}
+        </h1>
+      </div>
+      <!-- not verified -->
+      <div *ngIf="response.status === 'info'">
+        <h1 class="text-center text-info" *ngFor="let mess of response.message.split('-')">
+          {{mess}}
+        </h1>
+       <div class="d-flex justify-content-center">
+        <button mat-button color="primary" class="resend px-5 py-3" (click)="resend()">
+          resend
+        </button>
+       </div>
+      </div>
+      <!-- error -->
+      <div *ngIf="response.status === 'error'">
+        <h1 class="text-center text-danger">
+          {{response?.message}}
+        </h1>
+      </div>
+      <!-- error -->
+      <div *ngIf="response.message">
+        <p *ngFor="let mess of response.message">
+          {{mess}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner *ngIf="!response" [isSpinner]="isSpinner"></app-spinner>

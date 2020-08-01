@@ -1,0 +1,80 @@
+<div *ngIf="!isSpinner" class="container-fluid p-0">
+  <div class="row">
+    <div class="col-12">
+      <!--  -->
+      <div class="d-flex justify-content-center py-3">
+        <mat-card class="card p-3">
+          <h2 class="text-center">login</h2>
+          <!-- social media login-->
+          <div class="d-flex justify-content-center p-3">
+            <!-- <app-google-sign-in></app-google-sign-in> -->
+          </div>
+          <!-- social media login end -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- username -->
+            <div class="d-flex justify-content-center">
+              <mat-form-field class="inputSize" appearance="outline">
+                <mat-icon color="primary" matPrefix>person</mat-icon>
+                <mat-label>username(email)</mat-label>
+                <input type="text" matInput formControlName="username" />
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.username.valid"
+                          >
+                          check_circle
+                </mat-icon>
+                <mat-error *ngIf="f.username.invalid">
+                  username is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- password -->
+            <div class="d-flex justify-content-center">
+              <mat-form-field class="inputSize" appearance="outline">
+                <mat-icon matPrefix
+                          color="primary"
+                          (click)="isPassword = !isPassword"
+                          >
+                  {{!isPassword ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+                <mat-label>password</mat-label>
+                <input [type]="!isPassword ? 'password' : 'text'"
+                        matInput
+                        formControlName="password"
+                        autocomplete="off"
+                        >
+                <mat-icon matSuffix
+                          *ngIf="f.password.valid"
+                          [appText]="'green'">
+                  check_circle
+                </mat-icon>
+                <mat-hint align="start" *ngIf="f.password.dirty">
+                  minimum 6 characters length
+                </mat-hint>
+                <mat-hint align="end" *ngIf="f.password.dirty">
+                  {{f.password.value.length}}/6
+                </mat-hint>
+                <mat-error *ngIf="f.password.invalid"
+                           >
+                  password is required(min 6 characters)
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- submit button -->
+            <button class="w-100 mt-1"
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="loginForm.invalid"
+                    >
+              login
+            </button>
+          </form>
+        </mat-card>
+      </div>
+      <!--  -->
+    </div>
+  </div>
+</div>
+<!-- spinner -->
+<app-spinner *ngIf="isSpinner" [isSpinner]="isSpinner"></app-spinner>
+<app-message *ngIf="response" [response]="response"></app-message>

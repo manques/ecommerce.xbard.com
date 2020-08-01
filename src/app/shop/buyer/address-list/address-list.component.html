@@ -1,0 +1,81 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <!-- spinner -->
+    <div class="col-12 p-0 m-0">
+      <app-spinner [isSpinner]="!addressList"></app-spinner>
+    </div>
+    <!-- address list -->
+    <div *ngIf="addressList" class="col-12 p-0 m-0">
+      <div class="d-flex flex-column align-items-center p-2">
+        <!-- list -->
+        <mat-card *ngIf="selectedAddress"
+                  class="address-card w-100"
+                  (mouseenter)="deliveryHere.emit(true)">
+          <!--  -->
+          <mat-radio-group
+                           class="d-flex flex-column w-100 my-3">
+            <mat-radio-button *ngFor="let address of addressList"
+                              class=" p-2 my-1 pl-3 address-box shadow-sm rounded w-100"
+                              [value]="address._id"
+                              ngDefaultControl
+                              [checked]="selectedAddress === address._id"
+                              (change)="onSelectionChange(address)">
+
+             <div class="pl-2 w-100">
+              <div class="d-flex flex-wrap w-100 textPrimary mb-1">
+                <h4 class="p-0 m-0 pr-1 addressContent">
+                  <strong>{{address.name}}</strong>
+                </h4>
+                <h4 class="p-0 m-0 addressContent">
+                  <strong>{{address.phone}}</strong>
+                </h4>
+              </div>
+              <div class="d-flex flex-wrap p-0 m-0 addressContent text-secondary">
+                <p class="p-0 m-0 pl-1">{{address.locality}},</p>
+                <p class="p-0 m-0 pl-1">{{address.address}},</p>
+                <p class="p-0 m-0 pl-1">{{address.district}},</p>
+                <p class="p-0 m-0 pl-1">{{address.state}},</p>
+                <p class="p-0 m-0 pl-1">{{address.country}},</p>
+                <p class="p-0 m-0 pl-1">{{address.pincode}},</p>
+                <p class="p-0 m-0 pl-1">{{address.updated}},</p>
+              </div>
+              <!-- delivery options -->
+              <div *ngIf="isCheckout">
+                <button mat-raised-button
+                      *ngIf="selectedAddress === address._id"
+                      type="button"
+                      matStepperNext
+                      class="mx-1 py-sm-1 mt-2 px-md-5"
+                      color="primary">
+                  <span class="pr-1">delivery here</span>
+                </button>
+              </div>
+             </div>
+            </mat-radio-button>
+          </mat-radio-group>
+          <!-- button view all address -->
+          <button mat-raised-button
+                  class="w-100 textPrimary"
+                  type="button"
+                  *ngIf="total > currentSize"
+                  (click)="getMoreAddress()">
+            <mat-icon>expand_more</mat-icon>
+            <span class="pl-2">View all {{total-3}} address</span>
+          </button>
+          <!--  -->
+        </mat-card>
+        <button  class="address-card w-100 mt-3"
+                 type="button"
+                 mat-raised-button
+                 (click)="isAddAddress = !isAddAddress">
+          <mat-icon color="primary">{{!isAddAddress ? 'add' : 'cancel'}}</mat-icon>
+          <span class="p-0 m-0 pl-2 textPrimary">{{ !isAddAddress ? 'Add a new address' : 'cancel add address'}}</span>
+        </button>
+        <app-add-address *ngIf="isAddAddress"
+                         (isAddAddress)="isAddAddress = false; fetchAddressList;">
+        </app-add-address>
+        <!--  -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 py-5">
+      <!-- start -->
+      <!-- invalid request -->
+      <div *ngIf="!params">
+        <app-page-not-found></app-page-not-found>
+      </div>
+      <!-- resend email verification link -->
+      <div *ngIf="response">
+        <!-- success -->
+        <div *ngIf="response?.data">
+          <h1 class="text-center text-success" *ngFor="let mess of response?.message.split('-')">
+            {{mess}}
+          </h1>
+          <h1 class="text-center text-success">
+            {{response?.data}}
+          </h1>
+        </div>
+        <!-- error -->
+        <div *ngIf="!response?.success" >
+          <h1 class="text-center text-danger" *ngFor="let mess of response?.message.split('-')">
+            {{mess}}
+          </h1>
+        </div>
+        <!-- end -->
+      </div>
+      <!-- end -->
+    </div>
+  </div>
+</div>
+<app-spinner *ngIf="!response"
+             [isSpinner]="spinner"></app-spinner>
+<app-message *ngIf="response" [response]="response"></app-message>

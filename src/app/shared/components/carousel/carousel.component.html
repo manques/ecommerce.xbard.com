@@ -1,0 +1,30 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <div class="col-12 p-0 m-0">
+      <div class="d-flex justify-content-center">
+       <div class="box bg-danger">
+        <img [src]="display.src" class="slider-image">
+        <div class="caption">
+          <h2 class="text-center">{{display.caption}}</h2>
+        </div>
+        <button mat-icon-button class="left" (click)="decrement()">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button class="right" (click)="increment()">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        <div class="navigator">
+          <div class="d-flex justify-content-center">
+            <div class="box-circle d-flex justify-content-center align-items-center"
+                 *ngFor="let d of sliders; let ind = index"
+                 (click)="selected(ind)"
+                 >
+                 <img [src]="d.src" class="box-circle {{display.caption === d.caption ? 'op-active' : 'op-normal'}}">
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+mat-sidenav-container, mat-sidenav-content {
+  width: 100%;
+  min-height: 100%;
+}
+
+mat-sidenav {
+  width: 300px;
+  height: 100%;
+}
+.topMargin{
+  margin: 0px;
+  margin-top: 56px;
+}
+
+@media screen and (min-width: 600px){
+  .topMargin{
+    margin: 0px;
+    margin-top: 112px;
+  }
+}

@@ -1,0 +1,8 @@
+.product-card {
+  width: 175px;
+}
+.product-image img{
+  height: 150px;
+  width: auto;
+  max-width: 100%;
+}

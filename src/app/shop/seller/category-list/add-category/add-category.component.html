@@ -1,0 +1,64 @@
+<div *ngIf="!spinner" class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-center py-3">
+          <mat-card class="card-box p-3">
+            <form [formGroup]="categoryForm" (ngSubmit)="submit()">
+              <!-- title -->
+              <h1 class="textPrimary text-center">add category</h1>
+              <!-- category list -->
+              <div class="d-flex justify-content-center">
+                <mat-form-field class="fieldSize" appearance="outline">
+                  <mat-label>select parent category</mat-label>
+                  <mat-select formControlName="parent">
+                    <mat-option value="" class="m-2">
+                      -- not parent --
+                    </mat-option>
+                    <mat-option *ngFor="let category of (categories | categories) "
+                                [value]="category._id"
+                                class="{{(category.name.charAt(0) === '-') && (category.name.charAt(1) === '-') ? 'text-secondary border-bottom' : ''}}
+                                       {{(category.name.charAt(0) === '-') && (category.name.charAt(1) !== '-') ? 'text-success border-bottom' : ''}}
+                                       {{category.name.charAt(0) !== '-' ? 'bgPrimary text-white': ''}}
+                                       m-2">
+                     <span *ngFor="let item of category.name.split('-')">
+                       {{!item ? '&nbsp;&nbsp;&nbsp;&nbsp;' : item }}
+                     </span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <!-- add category -->
+              <div class="d-flex justify-content-center">
+                <mat-form-field class="fieldSize" appearance="outline">
+                  <mat-label>add category name</mat-label>
+                  <mat-icon color="primary" matPrefix>add</mat-icon>
+                  <input matInput
+                         type="text"
+                         formControlName="name"
+                         autocomplete="off">
+                  <mat-icon [appText]="'green'"
+                            *ngIf="f.name.valid"
+                            matSuffix >
+                          check_circle
+                  </mat-icon>
+                  <mat-error *ngIf="f.name.invalid">
+                    category name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!-- submit button -->
+              <button type="submit"
+                      class="w-100 mt-1"
+                      mat-raised-button
+                      color="primary"
+                      [disabled]="categoryForm.invalid">
+                add category
+              </button>
+            </form>
+          </mat-card>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- spinner -->
+<app-spinner *ngIf="spinner" [isSpinner]="spinner"></app-spinner>

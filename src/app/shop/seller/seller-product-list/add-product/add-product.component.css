@@ -1,0 +1,22 @@
+.mat-form-field-appearance-outline::ng-deep .mat-form-field-wrapper {
+  margin: 0px;
+}
+.features_width {
+  width: 45%;
+}
+.productImage{
+  height: 100px;
+  width: auto;
+  position: relative;
+}
+.closer {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  padding: 2px;
+  right: -5px;
+  top: -5px;
+  color: red;
+  text-shadow: 2px 2px 4px #ffffff;
+}

@@ -1,0 +1,261 @@
+<div *ngIf="!spinner " class="container-fluid p-0 m-0">
+  <div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0">
+      <div class="d-flex justify-content-center p-0 m-0">
+        <div class="full-card p-0 m-0 m-md-2">
+          <div class="d-flex justify-content-center flex-wrap w-100">
+                <!-- profile main card -->
+                <div class="d-flex justify-content-center  p-3">
+                  <mat-card class="card-box"
+                            (mouseenter)="profileEdit = !profileEdit"
+                            (mouseleave)="profileEdit = !profileEdit">
+                    <!-- profile image -->
+                    <div class="profile-top bg-secondary w-100 border">
+                      <!-- --------------------------------   profile background image ------------------------------------- -->
+                      <div class="p-0 m-0 profile-bg"
+                            (mouseenter)="profileBgEdit = !profileBgEdit"
+                            (mouseleave)="profileBgEdit = !profileBgEdit">
+                            <!-- bg image -->
+                        <img [src]="user?.image?.background || '../../../assets/profile/profileBackgroundImage.jpg'"
+                            alt="profile bg">
+                            <!-- edit bg image button -->
+                        <button mat-icon-button
+                                *ngIf="profileBgEdit"
+                                class="bg-light"
+                                (click)="inputBgImage.click()"
+                                color="primary">
+                          <mat-icon
+                                  matTooltip="change profile background image"
+                                  matTooltipPosition="above"
+                                  matTooltipClass="tooltip-bg"
+                                  aria-label="change profile background image">
+                              insert_photo
+                          </mat-icon>
+                        </button>
+                        <!-- insert bg image processor -->
+                        <input style="display: none;"
+                              type="file"
+                              (change)="changeBg($event)"
+                              #inputBgImage>
+                      </div>
+                      <!-- -------------------------------    profile image ------------------------------------------ -->
+                      <div class="profile-image-outer"
+                          (mouseenter)="profileImageEdit = !profileImageEdit"
+                          (mouseleave)="profileImageEdit = !profileImageEdit">
+                        <div class="profile-image h-100 w-100 p-0 m-0">
+                          <!-- image -->
+                          <img class="w-100 h-100 img-thumbnail rounded-circle"
+                            alt="profile image"
+                            [src]="user?.image?.picture || '../../../assets/icon/profile-icon.png'">
+                            <!-- button -->
+                          <button type="button"
+                                  (click)="profileImg.click()"
+                                  *ngIf="profileImageEdit"
+                                  color="primary"
+                                  mat-icon-button>
+                              <mat-icon matTooltip="profile image"
+                                        matTooltipPosition="below"
+                                        matTooltipClass="tooltip-bg"
+                                        aria-label="profile image">
+                                insert_photo
+                              </mat-icon>
+                          </button>
+                          <!-- input -->
+                          <input type="file"
+                                  style="display: none"
+                                  #profileImg
+                                  (change)="changeProfile($event)">
+                        </div>
+                      </div>
+                    </div>
+                    <h2 class="p-0 m-0 text-center" color="primary">
+                      {{user?.name}}
+                    </h2>
+                    <!-- social media -->
+                    <div class="social">
+                      <div class="d-flex justify-content-center">
+                        <!-- facebook -->
+                        <a mat-icon-button
+                                href="{{user?.social?.facebook}}"
+                                [appText]="'green'"
+                                *ngIf="user?.social?.facebook">
+                          <span class="fa fa-facebook"></span>
+                        </a>
+                        <!-- twitter -->
+                        <a mat-icon-button
+                                href="{{user?.social?.twitter}}"
+                                [appText]="'green'"
+                                *ngIf="user?.social?.twitter">
+                          <span class="fa fa-twitter"></span>
+                        </a>
+                        <!-- github -->
+                        <a mat-icon-button
+                                href="{{user?.social?.github}}"
+                                [appText]="'black'"
+                                *ngIf="user?.social?.github">
+                          <span class="fa fa-github"></span>
+                        </a>
+                        <!-- instagram -->
+                        <a mat-icon-button
+                                href="{{user?.social?.instagram}}"
+                                [appText]="'green'"
+                                *ngIf="user?.social?.instagram">
+                          <span class="fa fa-instagram"></span>
+                        </a>
+                      </div>
+                    </div>
+                    <!-- profile detail -->
+                    <div class="profile-detail w-100">
+                      <div class="pt-2">
+                        <!-- phone -->
+                        <a mat-button color="primary" href="tel:{{user?.phone}}">
+                          <mat-icon>phone</mat-icon>
+                          <span class="pl-2">{{user?.phone}}</span>
+                        </a>
+                        <div></div>
+                        <!-- email -->
+                        <a mat-button color="primary" href="mailto:{{user?.email}}">
+                          <mat-icon>email</mat-icon>
+                          <span class="pl-2">{{user?.email}}</span>
+                        </a>
+                        <!-- isSeller -->
+                      <div class="isSeller">
+                        <div class="p-0 m-0 d-inline bg-dager">
+                          <mat-slide-toggle  (change)="changeSeller()"
+                                            [checked]="seller"
+                                            >
+                          </mat-slide-toggle>
+                          <span class="pl-2">
+                            <strong>isSeller</strong> ({{seller ? 'yes' : 'no'}})
+                          </span>
+                        </div>
+                      </div>
+                      <!-- change password -->
+                      <div class="changePassword">
+                        <a mat-button
+                            color="primary"
+                            routerLink="/change-password">
+                            <mat-icon>update</mat-icon>
+                            <span class="pl-2">change password</span>
+                        </a>
+                      </div>
+                      </div>
+                    </div>
+                    <!-- profile edit -->
+                    <a class="profile-edit"
+                            *ngIf="profileEdit"
+                            color="primary"
+                            [routerLink]="['/edit-profile']"
+                            mat-icon-button
+                            >
+                      <mat-icon matTooltip="edit profile"
+                                matTooltipClass="tooltip-bg"
+                                matTooltipPosition="left"
+                                aria-label="edit profile">
+                        edit
+                      </mat-icon>
+                    </a>
+                  </mat-card>
+                </div>
+                <!-- cart wishlist address -->
+                <div class="d-flex justify-content-center p-3">
+                  <mat-card class="card-box">
+                    <!-- address -->
+                    <div class="address bg-light p-2">
+                      <h2 class="text-center textPrimary">Address</h2>
+                      <!-- add address -->
+                      <button mat-stroked-button
+                              color="primary"
+                              class="w-100"
+                              type="button"
+                              routerLink="/add-address">
+                        <mat-icon>add_location</mat-icon>
+                        <span class="pl-1">add address</span>
+                      </button>
+                      <!-- list address -->
+                      <button mat-stroked-button
+                              color="primary"
+                              class="w-100 mt-2"
+                              type="button"
+                              routerLink="/address-list">
+                        <mat-icon>place</mat-icon>
+                        <span class="pl-1">address List</span>
+                      </button>
+                    </div>
+                    <!-- buy -->
+                    <div class="buy bg-light p-2 mt-2">
+                      <h2 class="text-center textPrimary">Buy</h2>
+                      <!-- add to cart -->
+                      <button mat-stroked-button
+                              color="primary"
+                              class="w-100"
+                              type="button"
+                              routerLink="/cart">
+                        <mat-icon>shopping_basket</mat-icon>
+                        <span class="pl-1">cart</span>
+                      </button>
+                      <!-- wishlist -->
+                      <button mat-stroked-button
+                              color="primary"
+                              class="w-100 mt-2"
+                              type="button"
+                              routerLink="/wishlist">
+                        <mat-icon>favorite</mat-icon>
+                        <span class="pl-1">wishlist</span>
+                      </button>
+                    </div>
+                  </mat-card>
+                </div>
+                <!-- seller main card -->
+                <div *ngIf="seller" class="d-flex justify-content-center p-3">
+                  <mat-card class="card-box">
+                    <!-- title -->
+                    <h2 class="text-center textPrimary">Seller</h2>
+                    <!-- product operation -->
+                    <div class="my-2 bg-light p-2">
+                      <!-- add product button -->
+                      <a mat-stroked-button
+                        routerLink="/seller/add-product"
+                        color="primary"
+                        class="w-100">
+                        <mat-icon>add</mat-icon> <span class="pl-1">add Product</span>
+                      </a>
+                      <!-- seller product list -->
+                      <a mat-stroked-button
+                        routerLink="/seller/product-list"
+                        color="primary"
+                        class="w-100 mt-2">
+                        <mat-icon>list</mat-icon> <span class="pl-1">my product list</span>
+                      </a>
+                    </div>
+                    <!-- category -->
+                    <div class="bg-light p-2">
+                      <h3 class="text-center textPrimary">category</h3>
+                      <div class="">
+                        <!-- add category -->
+                        <button mat-stroked-button
+                                color="primary"
+                                class="w-100 mb-2"
+                                routerLink="/seller/add-category">
+                          add category
+                        </button>
+                      <!-- category list -->
+                      <button mat-stroked-button
+                              color="primary"
+                              class="w-100 mb-2"
+                              routerLink="/seller/category-list">
+                        category list
+                      </button>
+                      <!-- category end -->
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+                <!-- end box -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [isSpinner]="spinner"></app-spinner>

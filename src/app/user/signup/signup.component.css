@@ -1,0 +1,14 @@
+.fullWidth {
+  width: 100%;
+}
+.cardWidth {
+  width: 400px;
+}
+
+.inputSize {
+  max-width: 300px;
+}
+
+.resend {
+  font-size: 30px;
+}

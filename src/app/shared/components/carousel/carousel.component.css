@@ -1,0 +1,51 @@
+.slider-image {
+  height: 300px;
+  width: 100%;
+}
+.box{
+  position: relative;
+}
+.navigator {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  opacity: 1;
+}
+.box-circle {
+  width: 60px;
+  height: 30px;
+  background: white;
+}
+
+.caption {
+  position: absolute;
+  bottom: 50%;
+  width: 100%;
+  opacity: 1;
+}
+.caption h2 {
+  font-size: 40px;
+  color: white;
+}
+.op-active {
+  opacity: 0.9;
+}
+.op-normal {
+  opacity: 0.5;
+}
+
+.left{
+  position: absolute;
+  left: 0px;
+  top: calc(50% - 12px);
+  color: white;
+}
+.left:hover, .right:hover{
+  background-color: dodgerblue;
+}
+.right{
+  position: absolute;
+  right: 0px;
+  top: calc(50% - 12px);
+  color: white;
+}

@@ -1,0 +1,39 @@
+.product-list-table {
+  max-width: 600px;
+}
+.product-list-filter, .product-list-paginator{
+  width: 600px;
+}
+.dangerText {
+  font-size: 40px;
+  font-weight: bold;
+}
+.product-list-image {
+  height: 40px;
+  /* max-width: 80px; */
+}
+
+/* .product-list-image:empty {
+  background: whitesmoke;
+} */
+.product-list-image img{
+  height: 40px;
+  max-width: 100%;
+  width: auto;
+}
+.product-category {
+  font-size: 10px;
+  color: gray;
+}
+.product-price {
+  font-size: 12px;
+  color: brown;
+}
+.product-quantity {
+  width: 130px;
+  height: 54px;
+}
+
+.text-font {
+  line-height: 130%;
+}

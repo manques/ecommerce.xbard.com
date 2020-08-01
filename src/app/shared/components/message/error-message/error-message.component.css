@@ -1,0 +1,4 @@
+::ng-deep .error-style {
+  background-color: crimson;
+  color: white;
+}

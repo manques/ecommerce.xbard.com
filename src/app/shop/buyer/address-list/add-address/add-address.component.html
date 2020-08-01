@@ -1,0 +1,204 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <!-- spinner -->
+    <div class="col-12 p-0 m-0">
+      <app-spinner [isSpinner]=""></app-spinner>
+    </div>
+    <!-- add address  -->
+    <div class="col-12 p-0 m-0 py-3">
+      <div class="d-flex justify-content-center p-0 m-0">
+        <mat-card class="address-card px-4">
+          <h1 class="text-center textPrimary">
+            Add Address
+          </h1>
+          <form [formGroup]="addressForm" (ngSubmit)="submit()">
+            <div class="d-flex justify-content-center flex-wrap p-0 m-0">
+              <!-- name -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>name</mat-label>
+                <mat-icon matPrefix color="primary">person</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="name">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.name.valid && this.f.name.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.name.valid">
+                  name is required
+                </mat-error>
+              </mat-form-field>
+              <!-- phone -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>phone</mat-label>
+                <mat-icon matPrefix color="primary">phone</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="phone">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.phone.valid && this.f.phone.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.phone.valid">
+                  phone is required
+                </mat-error>
+              </mat-form-field>
+              <!-- country -->
+              <mat-form-field appearance="outline"
+                              class="w-100"
+                              *ngIf="countries">
+                <mat-label>country</mat-label>
+                <mat-icon matPrefix color="primary">flag</mat-icon>
+                <mat-select formControlName="country">
+                  <mat-option *ngFor="let country of countries"
+                              [value]="country">
+                    {{country}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- state -->
+              <mat-form-field appearance="outline"
+                              class="w-100"
+                              *ngIf="stateDistrict">
+                <mat-label>state</mat-label>
+                <mat-icon matPrefix color="primary">flag</mat-icon>
+                <mat-select formControlName="state"
+                            (selectionChange)="getDistricts($event.value)"
+                            >
+                  <mat-option *ngFor="let country of stateDistrict.states"
+                              [value]="country">
+                    {{country.state}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="spinner-grow text-primary" *ngIf="!stateDistrict"></div>
+              <!-- city -->
+              <mat-form-field *ngIf="districts" appearance="outline" class="w-100">
+                <mat-label>city/district</mat-label>
+                <mat-icon matPrefix color="primary">add_location</mat-icon>
+                <mat-select formControlName="district">
+                  <mat-option *ngFor="let dis of districts"
+                              [value]="dis">
+                    {{dis}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- pincode -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>pincode</mat-label>
+                <mat-icon matPrefix color="primary">fiber_pin</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="pincode">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.pincode.valid && this.f.pincode.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.pincode.valid">
+                  pincode is required
+                </mat-error>
+              </mat-form-field>
+              <!-- address -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>address</mat-label>
+                <mat-icon matPrefix color="primary">room</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="address">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.address.valid && this.f.address.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.address.valid">
+                  address is required
+                </mat-error>
+              </mat-form-field>
+              <!-- locality -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>locality</mat-label>
+                <mat-icon matPrefix color="primary">apartment</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="locality">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.locality.valid && this.f.locality.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.locality.valid">
+                  locolity is required
+                </mat-error>
+              </mat-form-field>
+              <!-- landmark -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>landmark(optional)</mat-label>
+                <mat-icon matPrefix color="primary">landscape</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="landmark">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.landmark.valid && this.f.landmark.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.landmark.valid">
+                  landmark is required
+                </mat-error>
+              </mat-form-field>
+              <!-- alternative phone -->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>alternative phone(optional)</mat-label>
+                <mat-icon matPrefix color="primary">phone</mat-icon>
+                <input type="text"
+                       matInput
+                       formControlName="alternativePhone">
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="this.f.alternativePhone.valid && this.f.alternativePhone.dirty">
+                  check_circle
+                </mat-icon>
+                <mat-error *ngIf="!this.f.valid">
+                  alternativePhone is required
+                </mat-error>
+              </mat-form-field>
+              <!-- address type -->
+              <div>
+                <label>address type</label>
+                <mat-radio-group formControlName="addressType"
+                                 class="d-flex flex-column">
+                  <mat-radio-button value="home"
+                                    class="py-1">
+                    home(all day delivery)
+                  </mat-radio-button>
+                  <mat-radio-button value="office"
+                                    class="py-1">
+                    work(delivery between 10AM to 5PM)
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <!-- submit -->
+              <button class="w-100 mt-1 p-2"
+                      color="primary"
+                      mat-raised-button
+                      type="submit"
+                      [disabled]="!this.addressForm.valid">
+                      <mat-icon color="accent">add_location</mat-icon>
+                      <span class="pl-1">add address</span>
+              </button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+    <!-- end add address -->
+    <!-- maps -->
+    <div class="col-12 p-0 m-0">
+      <h1 class="text-center textPrimary">google maps</h1>
+      <app-google-maps *ngIf="latLng" [mapOptions]="latLng"></app-google-maps>
+    </div>
+  </div>
+</div>

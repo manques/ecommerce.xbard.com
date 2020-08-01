@@ -1,0 +1,17 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <div class="col-12 p-0 m-0">
+      <div class="agm-map-full d-flex justify-content-center">
+        <agm-map *ngIf="mapOptions"
+                 [latitude]="mapOptions.lat"
+                 [longitude]="mapOptions.lng"
+                 [zoom]="mapOptions.zoom"
+                 class="agm-map-full">
+                 <agm-marker [latitude]="mapOptions.lat"
+                             [longitude]="mapOptions.lng">
+                 </agm-marker>
+        </agm-map>
+      </div>
+    </div>
+  </div>
+</div>

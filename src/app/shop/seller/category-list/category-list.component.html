@@ -1,0 +1,20 @@
+<div *ngIf="categories" class="container-fluid">
+  <div *ngIf="categories?.length" class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center py-3">
+        <mat-card class="card-box px-5">
+          <h1 class="text-center textPrimary">Category List</h1>
+          <div *ngFor="let category of (categories | categories)">
+            <h2>
+              {{category.name}}
+            </h2>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="categories">
+  <h1 *ngIf="!categories?.length" class="textPrimary text-center">NO categories found</h1>
+</div>
+<app-spinner [isSpinner]="!categories"></app-spinner>

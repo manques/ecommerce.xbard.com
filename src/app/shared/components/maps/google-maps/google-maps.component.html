@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center">
+  <mat-form-field appearance="outline">
+    <mat-label>enter address</mat-label>
+    <input matInput placeholder="Locations" #search class="input" formControlName="text" >
+  </mat-form-field>
+</div>
+
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <div class="col-12 p-0 m-0">
+      <div *ngIf="mapOptions" #map class="map-class"></div>
+    </div>
+  </div>
+</div>
+
+

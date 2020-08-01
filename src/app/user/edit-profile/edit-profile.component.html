@@ -1,0 +1,209 @@
+<div *ngIf="!spinner" class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center py-3">
+        <mat-card class="update-card">
+          <!-- start -->
+          <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <!-- -------------------- title ----------------------- -->
+            <h2 class="text-center">update profile</h2>
+            <!-- --------------------  name ---------------------------->
+            <div class="d-flex justify-content-center">
+              <mat-form-field class="inputSize" appearance="outline">
+                <!-- label -->
+                <mat-label>name</mat-label>
+                <!-- prefix icon -->
+                <mat-icon matPrefix
+                          color="primary">
+                  person
+                </mat-icon>
+                <!-- input -->
+                <input matInput
+                       formControlName="name"
+                       spellcheck="false"
+                       autocomplete="off"
+                       type="text">
+                <!-- check -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.name.valid">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="f.name.valid">
+                  name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- --------------------- email --------------------- -->
+            <div class="d-flex justify-content-center p-0 m-0">
+              <mat-form-field class="inputSize"
+                               appearance="outline">
+                <!-- label -->
+                <mat-label>email</mat-label>
+                <!-- prefix icon -->
+                <mat-icon matPrefix
+                          color="primary">
+                  email
+                </mat-icon>
+                <!-- input  -->
+                <input matInput
+                       formControlName="email"
+                       spellcheck="false"
+                       autocomplete="off"
+                       type="email">
+                <!-- check icon -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.email.valid">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="f.email.valid">
+                  email is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- ---------------------- phone ---------------------- -->
+            <div class="d-flex justify-content-center">
+              <mat-form-field class="inputSize"
+                               appearance="outline">
+                <!-- label -->
+                <mat-label>phone</mat-label>
+                <!-- prefix icon -->
+                <mat-icon matPrefix
+                          color="primary">
+                  phone
+                </mat-icon>
+                <!-- input  -->
+                <input matInput
+                       formControlName="phone"
+                       spellcheck="false"
+                       autocomplete="off"
+                       type="phone">
+                <!-- check icon -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.phone.valid">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="f.phone.valid">
+                  phone is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- --------------------- isSeller ---------------------- -->
+            <div  class="d-flex justify-content-start px-3">
+              <div>
+                <mat-slide-toggle [checked]="user?.isSeller"
+                                  formControlName="isSeller">
+                </mat-slide-toggle>
+                <span class="pl-3">isSeller</span>
+              </div>
+            </div>
+            <!-- --------------- social ---------------------------------------->
+            <div formGroupName="social" class="p-0 m-0">
+              <h3 class="text-start primaryColor px-3 pt-1 my-3">social</h3>
+              <!-- --------- facebook ----------- -->
+              <div class="d-flex justify-content-center">
+                <mat-form-field class="inputSize" appearance="outline">
+                  <mat-label>facebook link</mat-label>
+                  <div class="p-0 m-0 d-flex flex-wrap align-content-center  pr-2" matPrefix>
+                    <div class="p-0 m-0">
+                     <span class="fa fa-facebook p-0 m-0 px-1 iconSize">
+                     </span>
+                    </div>
+                   </div>
+                  <input matInput
+                         formControlName="facebook"
+                         type="text">
+                  <mat-icon matSuffix
+                            [appText]="'green'"
+                            *ngIf="s.facebook.dirty">
+                    check_circle
+                  </mat-icon>
+                </mat-form-field>
+              </div>
+              <!-- --------- twiiter ----------- -->
+              <div class="d-flex justify-content-center">
+                <mat-form-field class="inputSize" appearance="outline">
+                  <mat-label>twitter link</mat-label>
+                  <div class="p-0 m-0 d-flex flex-wrap align-content-center  pr-2" matPrefix>
+                    <div class="p-0 m-0">
+                     <span class="fa fa-twitter p-0 m-0 px-1 iconSize">
+                     </span>
+                    </div>
+                   </div>
+                  <input matInput
+                         formControlName="twitter"
+                         type="text">
+                  <mat-icon matSuffix
+                            [appText]="'green'"
+                            *ngIf="s.twitter.dirty">
+                    check_circle
+                  </mat-icon>
+                </mat-form-field>
+              </div>
+              <!-- --------- github ----------- -->
+              <div class="d-flex justify-content-center">
+                <mat-form-field class="inputSize" appearance="outline">
+                  <mat-label>github link</mat-label>
+                  <div class="p-0 m-0 d-flex flex-wrap align-content-center pr-2" matPrefix>
+                    <div class="p-0 m-0">
+                     <span class="fa fa-github p-0 m-0 px-1 iconSize">
+                     </span>
+                    </div>
+                   </div>
+                  <input matInput
+                         formControlName="github"
+                         type="text">
+                  <mat-icon matSuffix
+                            [appText]="'green'"
+                            *ngIf="s.github.dirty">
+                    check_circle
+                  </mat-icon>
+                </mat-form-field>
+              </div>
+              <!-- --------- instagram ----------- -->
+              <div class="d-flex justify-content-center">
+                <mat-form-field class="inputSize" appearance="outline">
+                  <mat-label>instagram link</mat-label>
+                  <div class="p-0 m-0 d-flex flex-wrap align-content-center pr-2" matPrefix>
+                    <div class="p-0 m-0">
+                     <span class="fa fa-instagram p-0 m-0 px-1 iconSize">
+                     </span>
+                    </div>
+                   </div>
+                  <input matInput
+                         formControlName="instagram"
+                         type="text">
+                  <mat-icon matSuffix
+                            [appText]="'green'"
+                            *ngIf="s.instagram.dirty">
+                    check_circle
+                  </mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- ------------------------ submit ---------------------------- -->
+            <button mat-raised-button
+                    class="w-100"
+                    color="primary"
+                    [disabled]="editForm.invalid">
+              <mat-icon>update</mat-icon>
+              <span class="pl-1">update profile</span>
+            </button>
+            <!-- end submit -->
+          </form>
+          <!-- end -->
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-spinner [isSpinner]="spinner"></app-spinner>
+<app-message *ngIf="response"
+             [response]="resonse">
+</app-message>

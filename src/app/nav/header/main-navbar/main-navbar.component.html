@@ -1,0 +1,136 @@
+<mat-card class="p-0 m-0">
+  <mat-toolbar class="d-flex bg-white px-md-5">
+    <div class="d-flex w-100">
+      <!-- left -->
+      <div class="left d-flex">
+        <!-- menu -->
+        <div class="mobile">
+          <button  (click)="sidenavOpen.emit(true)" mat-icon-button color="primary" class="order-1 bg-light">
+            <mat-icon>apps</mat-icon>
+          </button>
+        </div>
+
+        <!-- logo -->
+       <div class="d-flex align-items-center h-100  order-2" routerLink="/">
+         <img src="../../../../favicon.ico" class="px-2" >
+        </div>
+        <!-- all category -->
+        <button mat-icon-button
+                color="primary"
+                routerLink="/products"
+                class="order-3 mx-1">
+            <mat-icon>category</mat-icon>
+        </button>
+        <!-- categories & menu -->
+        <div class="pr-2 h-100 categories order-4">
+          <button (click)="categoriesToggle = !categoriesToggle"
+                  mat-raised-button color="primary" class="border border-0">
+            <mat-icon>apps</mat-icon> <span>All Categories</span>
+          </button>
+        </div>
+      </div>
+      <!-- middle -->
+      <div class="middle flex-grow-1 px-3">
+       <div class="w-100 h-100">
+        <div class="d-flex justify-content-center align-items-center h-100 w-100 px-2">
+          <div class="d-flex w-100 input-search  rounded bg-white" style="max-width: 600px;">
+            <div class="d-flex align-items-center px-2">
+              <mat-icon color="primary">search</mat-icon>
+            </div>
+            <input class="w-100 border border-0 searchText"
+                   placeholder="Search for products, brands and more"
+                   spellcheck="false">
+          </div>
+        </div>
+       </div>
+      </div>
+      <!-- right -->
+      <div class="right d-flex">
+        <!-- search for mobile -->
+       <div class="mobile">
+        <button (click)="searchToggle = !searchToggle" mat-icon-button color="primary">
+          <mat-icon>{{!searchToggle ? 'search' : 'close'}}</mat-icon>
+        </button>
+       </div>
+        <!-- notification
+        <button mat-icon-button color="primary">
+          <mat-icon>notifications</mat-icon>
+        </button> -->
+        <!-- user -->
+        <!-- user icon -->
+        <button *ngIf="!isAuth || !user"
+                [matMenuTriggerFor]="authMenu"
+                mat-icon-button
+                color="primary">
+          <mat-icon>person</mat-icon>
+        </button>
+        <!-- profile image -->
+        <div *ngIf="isAuth && user" class="p-0 m-0 profile-image">
+          <img class="w-100 h-100 rounded-circle shadow"
+               [matMenuTriggerFor]="authMenu"
+              [src]="user?.image?.picture || '../../../../assets/icon/profile-icon.png'">
+        </div>
+        <!-- menu list -->
+        <mat-menu #authMenu="matMenu" class="p-2 m-0">
+          <!-- login -->
+            <a mat-stroked-button
+               *ngIf="!isAuth"
+               color="primary"
+               class="w-100 mb-1"
+               routerLink="/login">
+               <mat-icon>input</mat-icon><span class="pl-2">login</span>
+            </a>
+            <!-- signup -->
+            <a mat-stroked-button
+               *ngIf="!isAuth"
+               color="primary"
+               class="w-100 mb-1"
+               routerLink="/signup">
+               <mat-icon>art_track</mat-icon><span class="pl-2">signup</span>
+            </a>
+            <!-- profile  -->
+            <a mat-stroked-button
+               *ngIf="isAuth"
+               color="primary"
+               class="w-100 mb-1"
+               routerLink="/profile">
+               <mat-icon>person</mat-icon><span class="pl-2">profile</span>
+            </a>
+             <!-- profile  -->
+             <a mat-stroked-button
+             *ngIf="isAuth"
+             color="primary"
+             class="w-100 mb-1"
+             routerLink="/change-password">
+             <mat-icon>vpn_key</mat-icon><span class="pl-2">change password</span>
+          </a>
+            <!-- logout -->
+            <a mat-stroked-button
+               *ngIf="isAuth"
+               color="primary"
+               class="w-100 mb-1"
+               (click)="logout()">
+               <mat-icon>exit_to_app</mat-icon><span class="pl-2">logout</span>
+            </a>
+        </mat-menu>
+        <!-- cart -->
+        <button mat-icon-button
+                color="primary"
+                routerLink="/cart"
+                *ngIf="cartItems">
+          <mat-icon [matBadge]="cartItems.length"
+                    matBadgePosition="above after"
+                    [matBadgeHidden]="!cartItems.length"
+                    matBadgeSize="small"
+                    matBadgeOverlap="true"
+                    matBadgeColor="accent"
+                    matBadgeDescription="product quantity">
+            shopping_cart
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+</mat-card>
+<app-search-bar class="search" *ngIf="searchToggle"></app-search-bar>
+<app-navbar *ngIf="categoriesToggle"></app-navbar>

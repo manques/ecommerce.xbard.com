@@ -1,0 +1,394 @@
+<!-- spinner -->
+<app-spinner [isSpinner]="spinner"></app-spinner>
+<app-message *ngIf="response" [response]="response"></app-message>
+<!-- add product box -->
+<div *ngIf="!spinner" class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- add product design start  -->
+      <div class="d-flex justify-content-center py-3">
+        <mat-card class="card-box">
+          <!-- h2 -->
+          <h2 class="textPrimary text-center">Add Product</h2>
+          <!-- start form -->
+          <form [formGroup]="addForm"  (ngSubmit)="onSubmit()">
+            <!-- ------------------- name--------------------  -->
+            <div class="d-flex justify-content-center">
+              <!-- form field -->
+              <mat-form-field appearance="outline" class="fieldSize">
+                <!-- label -->
+                <mat-label>product title</mat-label>
+                <!-- <mat-icon matPrefix></mat-icon>
+                <span class="fa fa-product" matPrefix></span> -->
+                <!-- input -->
+                <input type="text"
+                       matInput
+                       formControlName="name"
+                       autocomplete="off"
+                       spellcheck="false">
+                <!-- suffix icon -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.name.valid">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="f.name.invalid">
+                  name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- ------------------- price --------------------  -->
+            <div class="d-flex justify-content-center">
+              <!--------------------- form field -------------------->
+              <mat-form-field appearance="outline" class="fieldSize">
+                <!-- label -->
+                <mat-label>price</mat-label>
+                <!-- <mat-icon matPrefix></mat-icon>
+                <span class="fa fa-product" matPrefix></span> -->
+                <!-- input -->
+                <input type="text"
+                        matInput
+                        formControlName="price"
+                        autocomplete="off"
+                        spellcheck="false">
+                <!-- suffix icon -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.price.valid">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="f.name.invalid">
+                  price is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+             <!------------------------ image ----------------------------->
+            <div formGroupName="image" class="mb-3">
+              <h3 class="text-center textPrimary">Image</h3>
+              <!-- main image -->
+              <div class="main">
+                <!-- main image -->
+                <div class="d-flex justify-content-around" *ngIf="selectedMainImageUrl">
+                  <div class="productImage my-2">
+                    <img [src]="selectedMainImageUrl" class="productImage  img-thumbnail">
+                    <span class="closer" (click)="mainCloser()">&times;</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button class="w-75 rounded"
+                          mat-stroked-button
+                          color="primary"
+                          (click)="mainRef.click()"
+                          type="button">
+                    <mat-icon>add_photo_alternate</mat-icon>
+                    <span class="pl-2">select main image</span>
+                  </button>
+                  <input  type="file"
+                          #mainRef
+                          (click)="mainRef.value = null"
+                          style="display: none;"
+                          (change)="changeMainImage($event)">
+                </div>
+              </div>
+               <!-- gallery -->
+              <div class="gallery">
+                <!-- gallery -->
+                <div class="d-flex flex-wrap justify-content-center" *ngIf="selectedGalleryImageUrl">
+                  <div class="productImage mx-1 my-1" *ngFor="let gall of selectedGalleryImageUrl">
+                    <img [src]="gall" class="productImage  img-thumbnail">
+                    <span class="closer" (click)="galleryCloser(gall)">&times;</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button class="w-75 mt-2"
+                          mat-stroked-button
+                          color="primary"
+                          (click)="galleryRef.click()"
+                          type="button">
+                    <mat-icon>add_photo_alternate</mat-icon>
+                    <span class="pl-2">select gallery images</span>
+                  </button>
+                  <input  type="file"
+                          (click)="galleryRef.value = null"
+                          class="mt-2"
+                          #galleryRef
+                          style="display: none;"
+                          (change)="changeGalleryImages($event)"
+                          multiple>
+                </div>
+              </div>
+            </div>
+            <!-- ---------------- category  --------------------- -->
+            <div  class="d-flex justify-content-center">
+              <mat-form-field *ngIf="categories"
+                              appearance="outline"
+                              class="fieldSize">
+                <mat-label>--- select category ---</mat-label>
+                <mat-select formControlName="categoryId" (selectionChange)="findPath()">
+                  <mat-option *ngFor="let category of (categories | categories)" [value]="category._id">
+                    {{category.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>category is required</mat-error>
+              </mat-form-field>
+              <div   *ngIf="!categories"
+                     class="spinner-grow text-success text-center mb-2"></div>
+            </div>
+            <!-- ----------------- SKU ------------------------------>
+            <div class="d-flex justify-content-center">
+              <mat-form-field appearance="outline" class="fieldSize">
+                <mat-label>SKU</mat-label>
+                <input type="text"
+                       matInput
+                       formControlName="sku"
+                       autocomplete="off"
+                       spellcheck="false">
+                <mat-error>SKU is required</mat-error>
+              </mat-form-field>
+            </div>
+            <!-- ------------------- quantity --------------------  -->
+            <div class="d-flex justify-content-center">
+              <!-- form field -->
+              <mat-form-field appearance="outline" class="fieldSize">
+                <!-- label -->
+                <mat-label>quantity</mat-label>
+                <!-- <mat-icon matPrefix></mat-icon>
+                <span class="fa fa-product" matPrefix></span> -->
+                <!-- input -->
+                <input type="text"
+                        matInput
+                        formControlName="quantity"
+                        autocomplete="off"
+                        spellcheck="false">
+                <!-- suffix icon -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.quantity.valid">
+                  check_circle
+                </mat-icon>
+                <!-- error -->
+                <mat-error *ngIf="f.quantity.invalid">
+                  quantity is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- ------------------- tags --------------------  -->
+            <div class="d-flex justify-content-center">
+              <!-- form field -->
+              <mat-form-field appearance="outline" class="fieldSize">
+                <!-- label -->
+                <mat-label>tags</mat-label>
+                <!-- <mat-icon matPrefix></mat-icon>
+                <span class="fa fa-product" matPrefix></span> -->
+                <!-- input -->
+                <input type="text"
+                        matInput
+                        formControlName="tags"
+                        autocomplete="off"
+                        spellcheck="false">
+                <!-- suffix icon -->
+                <mat-icon matSuffix
+                          [appText]="'green'"
+                          *ngIf="f.tags.valid && f.tags.dirty">
+                  check_circle
+                </mat-icon>
+              </mat-form-field>
+            </div>
+            <!-- --------------- dimensions --------------------------- -->
+            <div formGroupName="dimensions">
+              <h3 class="text-center textPrimary">Dimensions</h3>
+              <div class="d-flex justify-content-around flex-wrap">
+                <!-- length -->
+                <div class="w-25">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- label -->
+                    <mat-label>Length</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="length"
+                           autocomplete="off"
+                           spellcheck="false">
+                  </mat-form-field>
+                </div>
+                <!-- breadth -->
+                <div class="w-25">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- label -->
+                    <mat-label>Breadth</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="breadth"
+                           autocomplete="off"
+                           spellcheck="false">
+                  </mat-form-field>
+                </div>
+                <!-- height -->
+                <div class="w-25">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- label -->
+                    <mat-label>Height</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="height"
+                           autocomplete="off"
+                           spellcheck="false">
+                  </mat-form-field>
+                </div>
+                <!-- units -->
+                <div class="w-50">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- label -->
+                    <mat-label>Units</mat-label>
+                    <mat-select formControlName="units">
+                      <mat-option *ngFor="let i of dimensionUnits" [value]="i">
+                        {{i}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- ----------------   weight   ------------------------------- -->
+            <div formGroupName="weight">
+              <h3 class="text-center textPrimary">Weight</h3>
+              <div class="d-flex justify-content-around flex-wrap">
+                <!-- weight value -->
+                <div class="w-75">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- label -->
+                    <mat-label>weight</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="value"
+                           autocomplete="off"
+                           spellcheck="false"
+                           >
+                  </mat-form-field>
+                </div>
+                <div class="w-50">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- label -->
+                    <mat-label>units</mat-label>
+                    <mat-select formControlName="units">
+                      <mat-option *ngFor="let w of weightUnits" [value]="w">
+                        {{w}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- --------------- pickup location ---------------->
+            <div class="d-flex justify-content-center">
+              <app-address-list (deliveryHere)="6===6"
+                                (address)="selectedAddress($event)"
+                                [isCheckout]="false">
+              </app-address-list>
+            </div>
+            <!---------------------- description -------------------------->
+            <div formGroupName="description" class="border-top border-light pt-3">
+              <!-- title -->
+              <h3 class="text-center textPrimary">
+                description
+              </h3>
+              <!-- ------------------- short --------------------  -->
+              <div class="d-flex justify-content-center">
+                <!-- form field -->
+                <mat-form-field appearance="outline" class="fieldSize">
+                  <!-- label -->
+                  <mat-label>short</mat-label>
+                  <!-- <mat-icon matPrefix></mat-icon>
+                  <span class="fa fa-product" matPrefix></span> -->
+                  <!-- input -->
+                  <textarea type="text"
+                          matInput
+                          formControlName="short"
+                          autocomplete="off"
+                          spellcheck="false">
+                  </textarea>
+                  <!-- error -->
+                  <mat-error *ngIf="fd.short.invalid">
+                    short is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!-- ------------------- long --------------------  -->
+              <div class="d-flex justify-content-center">
+                <!-- form field -->
+                <mat-form-field appearance="outline" class="fieldSize">
+                  <!-- label -->
+                  <mat-label>long</mat-label>
+                  <!-- <mat-icon matPrefix></mat-icon>
+                  <span class="fa fa-product" matPrefix></span> -->
+                  <!-- input -->
+                  <textarea type="text"
+                          matInput
+                          formControlName="long"
+                          autocomplete="off"
+                          spellcheck="false">
+                  </textarea>
+                  <!-- error -->
+                  <mat-error *ngIf="short.invalid">
+                    long is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!--------------- features ---------------------  -->
+              <div class="pt-2 pb-3">
+                <h3 class="text-center textPrimary">click button features add more features list</h3>
+                <div class="d-flex justify-content-center">
+                  <button type="button"
+                          (click)="addFeatures()"
+                          mat-stroked-button
+                          color="primary"
+                          class="mb-2">
+                  Add more features
+                </button>
+                </div>
+                <div class="d-flex w-100">
+                  <div class="w-50">
+                    <h4 class="textPrimary text-center m-0 pr-3">feature</h4>
+                  </div>
+                  <div class="w-50">
+                    <h4 class="textPrimary text-center m-0 pl-3">value</h4>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                  <div class="features_width" formArrayName="features_title">
+                    <div class="w-100" *ngFor="let feature of ffTitle.controls; let i = index;">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>title {{i+1}}</mat-label>
+                        <input matInput [formControlName]="i">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <span class="p-2 py-3">  </span>
+                  <div class="features_width" formArrayName="features_value">
+                    <div class="w-100" *ngFor="let feature of ffValue.controls; let i = index;">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>value {{i+1}}</mat-label>
+                        <input matInput [formControlName]="i">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- submit button -->
+            <button type="submit"
+                    mat-raised-button
+                    class="w-100"
+                    color="primary"
+                    >
+              add product
+            </button>
+          </form>
+          <!-- end form -->
+        </mat-card>
+      </div>
+      <!-- add product design end -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0">
+    <!-- spinner -->
+    <div *ngIf="!items" class="col-12 p-0 m-0">
+      <app-spinner [isSpinner]="!items"></app-spinner>
+    </div>
+    <!-- empty wishlist -->
+    <div *ngIf="items && (items.length === 0)" class="col-12 p-3 m-0">
+      <h1 class="text-center text-danger">
+        <strong>Empty Wishlist</strong>
+      </h1>
+    </div>
+    <!-- wishlist -->
+    <div *ngIf="items" class="col-12 p-0 m-0">
+      <div class="d-flex justify-content-center flex-wrap p-1 p-md-2">
+        <!-- card -->
+        <mat-card class="product-card m-1 m-md-2" *ngFor="let item of items">
+          <!-- image -->
+          <div class="product-image w-100 d-flex justify-content-center">
+            <img [src]="item.product.image.main"
+                 class=""
+                 >
+          </div>
+          <!-- title -->
+          <div class="product-title">
+            <h3 class="text-center textPrimary p-0 m-0">
+              {{item.product.name}}
+            </h3>
+            <h3 class="text-center textPrimary p-0 m-0">
+              {{item.product.price | currency: 'INR'}}
+            </h3>
+          </div>
+          <div class="d-flex justify-content-center">
+            <!-- add to cart -->
+            <button mat-icon-button
+                    color="primary"
+                    class="mx-1"
+                    (click)="addToCart(item.product, 1)">
+              <mat-icon>add_shopping_cart</mat-icon>
+            </button>
+            <!-- delete wishlist -->
+            <button mat-icon-button
+                    color="accent"
+                    class="mx-1"
+                    (click)="removeWishlistItem(item.product._id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

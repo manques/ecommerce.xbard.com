@@ -1,0 +1,4 @@
+<app-success-message *ngIf="response.status === 'success'"  [dataMessage]="response"></app-success-message>
+<app-error-message *ngIf="response.status === 'error'" [dataError]="response"></app-error-message>
+<app-warning-message *ngIf="response.status === 'warning'" [dataWarning]="response"></app-warning-message>
+<app-info-message *ngIf="response.status === 'info'" [infoData]="response" ></app-info-message>

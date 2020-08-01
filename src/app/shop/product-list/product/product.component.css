@@ -1,0 +1,92 @@
+.gallery-rotation {
+  width: 64px;
+  min-height: 311px;
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+.image-box {
+  width: calc(100% - 64px);
+  min-height: 311px;
+}
+.image {
+  height: 350px;
+  width: auto;
+  max-width: 100%;
+}
+.pincode{
+  width: 185px;
+}
+.pincode input {
+  padding: 0px 0px 0px 1px;
+}
+.add-quantity {
+  width: 185px;
+}
+.add-quantity input {
+  padding: 0px 25px;
+}
+/* ::ng-deep .mat-input-element{
+  margin: 0px !important;
+} */
+
+
+/* ::ng-deep .mat-form-field-wrapper {
+  padding: 0px;
+} */
+/* ::ng-deep .mat-form-field-infix{
+  border: 0px;
+} */
+
+::ng-deep .pincode-button:parent {
+ top: 0px !important;
+}
+.feature-table {
+  max-width: 500px;
+}
+.image-click-box {
+  width: 64px;
+  height: 64px;
+}
+.gallery-image {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+.gallery-image:hover, .gallery-image-active {
+  border: 2px solid blue;
+  border-collapse: collapse;
+}
+
+.image-click-box::-webkit-scrollbar {
+  display: none;
+}
+.quantity {
+  max-width: 120px;
+}
+
+.quantity input:focus {
+  outline: none;
+  box-shadow: none;
+}
+.text-hover:hover {
+  color: blue;
+}
+.viewImageBox {
+  position: relative;
+}
+.viewImageBox button{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+/* related products */
+.related-card{
+  width: 100%;
+  max-width: 350px;
+}
+
+.related-card div img {
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+}

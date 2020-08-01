@@ -1,0 +1,32 @@
+
+.product-image img{
+    height: 60px;
+    width: auto;
+    max-width: 100px;
+
+}
+.product-image {
+  background-color: brown;
+}
+.product-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-quantity .product-input{
+  width: 130px;
+}
+
+.product-quantity .product-input input {
+  text-align: center;
+}
+.bg-strip {
+  /* background: bisque; */
+  width: 100%;
+  /* max-width: 600px; */
+}
+.price-card {
+  width: 100%;
+  max-width: 500px;
+}

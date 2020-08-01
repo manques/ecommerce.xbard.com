@@ -1,0 +1,26 @@
+.card-product {
+  width: 250px;
+}
+.card-product:hover {
+  box-shadow: 0 5px 10px 0 lightpink, 0 6px 20px 0 lavenderblush;
+}
+mat-card {
+  position: relative;
+}
+.product-image button{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.product-image img{
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+}
+
+.card-product button:active {
+  box-shadow: 0 2px 4px 0 lightyellow, 0 3px 10px 0 lavenderblush;
+}
+.breadcrumb-category:hover {
+  color: blue;
+}

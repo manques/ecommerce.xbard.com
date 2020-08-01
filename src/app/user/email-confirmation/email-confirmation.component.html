@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 py-5">
+      <!-- start -->
+        <!-- invalid token or id -->
+        <div *ngIf="!token || !email">
+          <app-page-not-found></app-page-not-found>
+        </div>
+        <!-- valid token & id  -->
+        <div *ngIf="token && email">
+          <!-- find response  -->
+          <div *ngIf="response">
+            <!-- success -->
+              <!-- // redirected to login -->
+            <!-- fail -->
+              <!-- token expires -->
+              <div *ngIf="response.status === 'warning'">
+                <h1 class="text-center text-warning" *ngFor="let mess of response.message.split(':')">
+                  {{mess}}
+                </h1>
+                <div class="d-flex justify-content-center">
+                  <button mat-button class="resend px-5 py-3" color="primary" (click)="resend()">
+                    resend
+                  </button>
+                </div>
+              </div>
+              <!-- db account  -->
+              <!-- ERROR -->
+          </div>
+        </div>
+      <!-- end -->
+    </div>
+  </div>
+</div>
+<app-spinner [isSpinner]="spinner" *ngIf="!response && ( token && email)"></app-spinner>
+<app-message *ngIf="response" [response]="response"></app-message>

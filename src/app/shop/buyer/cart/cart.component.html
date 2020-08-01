@@ -1,0 +1,121 @@
+<div class="container-fluid p-0 m-0">
+  <div class="row p-0 m-0 px-lg-5">
+    <!-- spinner -->
+    <div *ngIf="!items" class="col-12">
+      <app-spinner [isSpinner]="!items"></app-spinner>
+    </div>
+    <!-- empty cart -->
+    <div *ngIf="message" class="col-12 p-3">
+      <h1  class="text-center textPrimary">{{message}}</h1>
+    </div>
+    <!-- cart items -->
+    <div *ngIf="items" class="col-12 col-md-8 p-1 px-md-2">
+      <div class="d-flex flex-column align-items-center justify-content-center p-0 m-0">
+        <mat-card class="bg-strip  my-2" *ngFor="let item of items">
+          <div class="d-flex justify-content-between m-0">
+            <!-- image -->
+            <div class="d-flex align-items-center  p-0 m-0">
+              <div class="product-image">
+                <img [src]="item.product.image.main"
+                     class="p-0 m-0"
+                     alt="item.product.name"
+                     [routerLink]="['/product', item.product._id]">
+              </div>
+            </div>
+            <!-- details -->
+            <div class="product-details p-0 m-0">
+              <div class="p-1 p-0 m-0">
+                <h4 class="p-0 m-0" [routerLink]="['/product', item.product._id]">
+                  {{item.product.name}}
+                </h4>
+                <p class="p-0 m-0">{{item.product.price | currency: 'INR'}}</p>
+              </div>
+            </div>
+            <!-- quantity -->
+            <div class="product-quantity d-flex align-items-center">
+              <mat-form-field class="product-input pt-4 m-0 my-2" appearance="outline">
+                <mat-label>quantity</mat-label>
+                <button mat-icon-button
+                        color="primary"
+                        matPrefix
+                        (click)="item.quantity = item.quantity - 1"
+                        [disabled]="item.quantity <= 1">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <input matInput [(ngModel)]="item.quantity" (focus)="changeQuantity(item)">
+                <button mat-icon-button
+                        color="primary"
+                        matSuffix
+                        (click)="item.quantity = item.quantity + 1"
+                        [disabled]="item.quantity >= 10">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <!-- actions -->
+            <div class="product-action">
+              <div class="d-flex align-items-center h-100 w-100 justify-content-end">
+                <button mat-icon-button
+                        color="accent"
+                        (click)="removeCartItem(item.product._id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+        </mat-card>
+      </div>
+    </div>
+    <!-- product details & totals price -->
+    <div *ngIf="itemsTotalPrice" class="col-12 col-md-4 p-1 px-2">
+     <div class="d-flex justify-content-center">
+      <mat-card class="price-card bg-strip my-2">
+        <h2 class="text-secondary border-bottom p-1"><strong>PRICE DETAILS</strong></h2>
+        <!-- number of cart items & price -->
+        <div class="d-flex justify-content-between">
+          <div>
+            <h3>Price ({{items.length}} items)</h3>
+          </div>
+          <div>
+            <h3>{{itemsTotalPrice | currency: 'INR'}}</h3>
+          </div>
+        </div>
+        <!-- delivery fee -->
+        <div class="d-flex justify-content-between">
+          <div>
+            <h3>Delivery Fee</h3>
+          </div>
+          <div>
+            <h3>{{deliveryPrice | currency: 'INR'}}</h3>
+          </div>
+        </div>
+        <!-- total prices -->
+        <div class="d-flex justify-content-between border-top border-bottom py-3">
+          <div>
+            <h2 class="textPrimary p-0 m-0">
+              Total Amount
+            </h2>
+          </div>
+          <div>
+            <h2 class="textPrimary p-0 m-0">
+              {{(itemsTotalPrice + deliveryPrice) | currency:'INR'}}
+            </h2>
+          </div>
+        </div>
+        <!-- place order -->
+        <div>
+          <button mat-raised-button
+                  color="accent"
+                  class="w-100 p-2"
+                  routerLink="/checkout">
+            <h2 class="p-0 m-0"><strong>PLACE ORDER</strong></h2>
+          </button>
+        </div>
+        <!--  -->
+      </mat-card>
+     </div>
+    </div>
+    <!--  -->
+  </div>
+</div>

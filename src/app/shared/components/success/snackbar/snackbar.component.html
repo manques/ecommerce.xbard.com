@@ -1,0 +1,18 @@
+<div *ngIf="data.success" class="d-flex justify-content-center snack p-0 m-0">
+  <button class="snack-close"
+          mat-mini-fab color="accent"
+          (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <div>
+    <h2 class="text-center">
+     {{data.message}}
+    </h2>
+   <div *ngIf="data.data">
+    <p *ngFor="let key of Object.keys(data.data)"
+        class="text-center">
+        {{key}} : {{data.data[key]}}
+    </p>
+   </div>
+  </div>
+</div>

@@ -1,0 +1,187 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- spinner -->
+    <div class="col-12">
+      <app-spinner [isSpinner]="isSpinner"></app-spinner>
+    </div>
+    <!-- vertical -->
+    <div *ngIf="!isSpinner" class="col-12 py-3">
+      <mat-vertical-stepper labelPosition="bottom"
+                            linear>
+         <!-- step login -->
+         <mat-step state="login"
+                   [completed]="isLogin.isCompleted"
+                   [editable]="isLogin.isEditable">
+           <ng-template matStepLabel>
+             login
+            </ng-template>
+           <div class="d-flex justify-content-center flex-wrap">
+            <!-- user  -->
+            <mat-card *ngIf="user" class="login-card my-3">
+               <div class="d-flex justify-content-center align-items-center">
+                 <div *ngIf="user?.image" class="">
+                  <img class="profile-image shadow rounded-circle"
+                       [src]="user?.image.picture || '../../../../favicon.ico'">
+                 </div>
+                 <div class="">
+                  <h3 class="p-0 m-0 pl-2 textPrimary">{{user.email}}</h3>
+                 </div>
+               </div>
+            </mat-card>
+            <!-- login button -->
+            <button class="login-card"
+                    *ngIf="!user"
+                    mat-raised-button
+                    color="primary"
+
+                    routerLink="/login">
+              <mat-icon>login</mat-icon>
+              <span class="pl-2">login</span>
+            </button>
+           </div>
+            <!-- next button -->
+            <div class="d-flex justify-content-center">
+              <button mat-raised-button
+                      matStepperNext
+                      color="primary"
+                      class="px-5 py-sm-1"
+                      [disabled]="!isLogin.isCompleted">
+                continue
+              </button>
+            </div>
+         </mat-step>
+         <!-- step address -->
+         <mat-step state="address"
+                   [completed]="isAddress.isCompleted"
+                   [editable]="isAddress.isEditable">
+          <ng-template matStepLabel>
+            address
+          </ng-template>
+          <div>
+            <app-address-list (address)="getSelectedAddress($event)"
+                              (deliveryHere)="isAddress.isCompleted = true"
+                              [isCheckout]="true">
+            </app-address-list>
+            <!-- navigation -->
+            <div class="d-flex justify-content-center p-2">
+              <!-- back -->
+              <button mat-raised-button
+                      matStepperPrevious
+                      class="mx-1">
+                <span>back</span>
+              </button>
+              <!-- delivery options -->
+              <!-- {{delivery.value}} -->
+              <!-- <button mat-raised-button
+                      matStepperNext
+                      class="mx-1 py-sm-1 px-md-5 d-none"
+                      color="primary"
+                      #delivery>
+                <span class="pr-1">delivery here</span>
+              </button> -->
+            </div>
+          </div>
+         </mat-step>
+         <!-- step delivery options -->
+         <mat-step state="options"
+                   [completed]="isOptions.isCompleted"
+                   [editable]="isOptions.isEditable">
+            <ng-template matStepLabel>
+              delivery options
+            </ng-template>
+            <app-shipping-options></app-shipping-options>
+            <!-- navigation -->
+            <div class="d-flex justify-content-center p-2">
+              <!-- back -->
+              <button mat-raised-button
+                      matStepperPrevious
+                      class="mx-1">
+                <span>back</span>
+              </button>
+              <!-- delivery options -->
+              <button mat-raised-button
+                      matStepperNext
+                      class="mx-1 py-sm-1 px-sm-5"
+                      color="primary">
+                <span>order summary</span>
+              </button>
+            </div>
+         </mat-step>
+         <!-- step order summary -->
+         <mat-step state="summary"
+                   completed="true"
+                   editable="false">
+          <ng-template matStepLabel>
+            order summary
+          </ng-template>
+          <!-- navigation -->
+          <div class="d-flex justify-content-center p-2">
+            <!-- back -->
+            <button mat-raised-button
+                    matStepperPrevious
+                    class="mx-1 px-sm-5 py-1">
+              <span>back</span>
+            </button>
+            <!-- delivery options -->
+            <button mat-raised-button
+                    matStepperNext
+                    class="mx-1 py-sm-1 px-sm-5"
+                    color="primary">
+              <span>payment</span>
+            </button>
+          </div>
+         </mat-step>
+         <!-- payments -->
+         <mat-step state="payments">
+          <ng-template matStepLabel>
+            pay
+          </ng-template>
+          <!-- navigation -->
+          <div class="d-flex justify-content-center p-2">
+            <!-- pay -->
+            <button mat-raised-button
+                    matStepperNext
+                    class="mx-1 px-sm-5 py-sm-1"
+                    color="primary">
+              <span class="pr-1">continue</span>
+              <mat-icon>navigate_next</mat-icon>
+            </button>
+          </div>
+         </mat-step>
+         <!-- done -->
+         <mat-step state="finish">
+          <ng-template matStepLabel>
+            done
+          </ng-template>
+         </mat-step>
+         <!-- stepper icons -->
+         <!-- login -->
+         <ng-template matStepperIcon="login">
+          <mat-icon>login</mat-icon>
+         </ng-template>
+         <!-- address -->
+         <ng-template matStepperIcon="address">
+            <mat-icon>place</mat-icon>
+         </ng-template>
+         <!-- delivery options -->
+         <ng-template matStepperIcon="options">
+           <mat-icon>local_shipping</mat-icon>
+         </ng-template>
+         <!-- order summary -->
+         <ng-template matStepperIcon="summary">
+          <mat-icon>list_alt</mat-icon>
+         </ng-template>
+         <!-- payment -->
+         <ng-template matStepperIcon="payments">
+            <mat-icon>payments</mat-icon>
+         </ng-template>
+         <!-- finish -->
+         <ng-template matStepperIcon="finish">
+          <mat-icon>receipt</mat-icon>
+         </ng-template>
+         <!-- end step login -->
+      </mat-vertical-stepper>
+    </div>
+    <!-- end vertical  -->
+  </div>
+</div>

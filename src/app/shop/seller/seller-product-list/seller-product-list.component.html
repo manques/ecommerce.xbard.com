@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- title -->
+    <div class="col-12 py-3 mb-1 bg-white">
+      <h2 class="text-center textPrimary p-0 m-0">Product List</h2>
+    </div>
+    <!-- spinner -->
+    <div class="col-12">
+      <app-spinner [isSpinner]="spinner"></app-spinner>
+    </div>
+    <!-- message -->
+    <div class="col-12">
+      <app-message *ngIf="response" [response]="response"></app-message>
+    </div>
+    <!-- fail response-->
+    <div *ngIf="!response?.success" class="col-12">
+      <h1 class="text-center text-danger dangerText">
+        {{response?.message}}
+      </h1>
+    </div>
+    <!-- filter -->
+    <div *ngIf="response" class="col-12 p-0 m-0">
+      <div class="d-flex justify-content-center p-0 m-0">
+        <div class="product-list-filter bg-white  p-0 m-0 px-5 pt-3">
+          <mat-form-field class="w-100">
+            <mat-label>filter</mat-label>
+            <input matInput
+                   (keyup)="applyFilter($event)"
+                   autocomplete="off">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <!-- product list design -->
+    <div *ngIf="response" class="col-12 p-0 px-md-3">
+      <div class="d-flex justify-content-center">
+        <table mat-table [dataSource]="dataSource" class="w-100 product-list-table">
+          <!-- image -->
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef class="text-center textPrimary">image</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex justify-content-center align-items-center">
+               <div class="product-list-image  p-0 m-0">
+                <img *ngIf="element.image"
+                     [routerLink]="['/product', element.details._id]"
+                     [src]="element.image" />
+               </div>
+              </div>
+            </td>
+          </ng-container>
+          <!-- details -->
+          <ng-container matColumnDef="details">
+            <th mat-header-cell *matHeaderCellDef class="text-center textPrimary">details</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex justify-content-center align-items-center px-1">
+                <div>
+                  <p class="p-0 m-0 text-font textPrimary" [routerLink]="['/product', element.details._id]">
+                    <strong>{{element.details.name}}</strong>
+                  </p>
+                  <p class="p-0 m-0 text-font product-price">{{element.details.price | currency:'INR'}}</p>
+                  <p class="p-0 m-0 text-font product-category">{{element.details.category.name}}</p>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <!-- qunatity -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef class="text-center textPrimary">quantity</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex justify-content-center align-items-center">
+                <mat-form-field appearance="outline" class="product-quantity m-0 p-0 ">
+                  <mat-label>quantity</mat-label>
+                  <button mat-icon-button
+                          matPrefix
+                          color="primary">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <input matInput
+                         [value]="element.quantity">
+                  <button mat-icon-button
+                          matSuffix
+                          color="primary">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+            </td>
+          </ng-container>
+          <!-- actions -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="text-center textPrimary">actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex justify-content-center flex-wrap align-items-center">
+                <!-- edit -->
+                <button mat-icon-button
+                color="primary">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <!-- delete -->
+                <button mat-icon-button
+                        color="accent">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+          <!-- row header -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns : displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+    <!-- paginator -->
+    <div *ngIf="response" class="col-12 p-0 m-0">
+      <div class="d-flex justify-content-center p-0 m-0">
+        <div class="product-list-paginator m-0 p-0">
+          <mat-paginator [length]="total"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="pageSizeOptions"
+                       showFirstLastButtons
+                       class="w-100"
+                       (page)="changePageSize($event)">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

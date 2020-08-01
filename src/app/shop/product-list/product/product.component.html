@@ -1,0 +1,277 @@
+<div class="container-fluid">
+  <div class="row mb-5">
+    <!-- spinner -->
+    <div class="col-12">
+      <app-spinner [isSpinner]="!product ? true : false"></app-spinner>
+    </div>
+    <!-- breadcrumb -->
+    <div *ngIf="product" class="col-12">
+      <h4 class="d-inline-block bg-light p-2 my-2 rounded ">
+        <span routerLink="/" class="text-hover">home</span>
+        <span class="" *ngFor="let category of (product.category._id | breadcrumb) | async">
+          <span class="px-2 fa fa-angle-double-right"></span>
+          <span class="text-hover"
+                [routerLink]="['/products']"
+                [queryParams]="{category : category._id}">
+            {{category.name}}
+          </span>
+        </span>
+        <span class="px-2 fa fa-angle-double-right"></span>
+        <span  class="">{{product.name}}</span>
+      </h4>
+    </div>
+    <!-- product design -->
+    <div *ngIf="product" class="col-12  p-0 m-0">
+      <div class="row p-0 m-0">
+        <!-- image & its gallry -->
+        <div class="col-12 col-md-5 p-0 m-0 p-sm-3">
+          <div class="d-flex justify-content-center p-0 m-0 w-100">
+            <div class="gallery-rotation p-0 m-0">
+              <!-- gallery -->
+              <div>
+                <div class="image-click-box"
+                     *ngFor="let image of gallery; let i = index ">
+                      <img [src]="image"
+                           class="w-100 h-100 p-1 gallery-image {{ viewImage === image ? 'gallery-image-active' : ''}}"
+                           (mouseenter)="changeViewImage(i)">
+                </div>
+              </div>
+            </div>
+            <div class="image-box bg-white p-0 m-0">
+             <div class="d-flex justify-content-center align-items-center py-3 viewImageBox">
+              <img [src]="viewImage" class="image">
+              <button type="button"
+                      mat-icon-button
+                      class="shadow-sm {{!wishlist ? 'text-secondary': ''}}"
+                      (click)="changeWishlist()"
+                      color="{{wishlist ? 'accent' : ''}}">
+                <mat-icon>favorite</mat-icon>
+              </button>
+             </div>
+             <!-- add to cart button & checkout button -->
+             <div class="d-flex justify-content-center">
+               <!-- add to cart -->
+               <button class="w-50 mx-1 mb-2 py-1 py-md-2"
+                       mat-raised-button
+                       color="primary"
+                       [disabled]="product.quantity <= 0">
+                <mat-icon>add_shopping_cart</mat-icon>
+                <span class="pl-1">add to cart</span>
+               </button>
+               <!-- checkout button -->
+               <button class="w-50 mx-1 mb-2 py-1 py-md-2"
+                       mat-raised-button
+                       color="primary"
+                       [disabled]="product.quantity <= 0">
+                <mat-icon>payment</mat-icon>
+                <span class="pl-1">checkout</span>
+               </button>
+             </div>
+            </div>
+          </div>
+        </div>
+        <!-- details -->
+        <div class="col-12  col-md-7 p-0 m-0 p-3">
+          <!-- name -->
+          <h2 class="textPrimary p-0 m-0">{{product.name}}</h2>
+          <!-- average rating -->
+          <div>
+            <p class="text-secondary p-0 m-0">rating</p>
+          </div>
+          <!-- price -->
+          <h1 class="py-2 m-0">{{product.price | currency : 'INR'}}</h1>
+          <!-- stock quantity-->
+          <div *ngIf="product.quantity">
+            <div *ngIf="product.quantity > 0 && product.qauntity <=5">
+              <h4 class="text-info p-0 m-0">
+                {{product.quantity}} left in stock
+              </h4>
+            </div>
+          </div>
+          <!-- out of stock -->
+          <div *ngIf="!product.quantity">
+            <h1 class="p-0 m-0 text-danger">
+              Out of Stock
+            </h1>
+          </div>
+          <!-- offer -->
+          <div>
+            <h4 class="p-0 m-0"><strong>Offer</strong></h4>
+            <p class="p-0 m-0">Bank offer</p>
+            <p class="p-0 m-0">EMI Offer</p>
+          </div>
+          <!-- check delivery pincode -->
+          <div class="mt-2">
+            <div *ngIf="message" class="text-danger p-0 m-0">
+              {{message}}
+            </div>
+            <mat-form-field appearance="outline" class="pincode">
+              <mat-label>pincode</mat-label>
+              <button mat-icon-button
+                      matPrefix>
+                <mat-icon class="{{message ? 'text-danger' : 'text-success'}}">place</mat-icon>
+              </button>
+              <input matInput
+                     [(ngModel)]="pincode"
+                     class=""
+                     autocomplete="off"
+                     (focus)="isPincode = true">
+              <button matSuffix
+                      mat-button
+                      color="primary"
+                      type="button"
+                      class="pincode-button"
+                      (click)="changePincode($event)">
+                {{isPincode ? 'check' : 'change'}}
+              </button>
+            </mat-form-field>
+          </div>
+          <!-- customer buy qunatity -->
+          <div class="d-flex flex-wrap align-items-center">
+            <mat-form-field class="add-quantity" appearance="outline">
+              <mat-label>
+                add quantity
+              </mat-label>
+              <button mat-mini-fab
+                      class=""
+                      matPrefix
+                      color="primary"
+                      (click)="quantity > 1 ? (quantity = quantity - 1) : ''"
+                      [disabled]="product.quantity <= 0">
+                <mat-icon>add</mat-icon>
+              </button>
+              <input
+                     matInput
+                     [(ngModel)]="quantity"
+                     [disabled]="product.quantity <= 0"
+                     >
+              <button mat-mini-fab
+                      matSuffix
+                      color="primary"
+                      (click)="quantity < quantityLimit ? (quantity = quantity + 1) : ''"
+                      [disabled]="(product.quantity <= 0) || (quantity >= product.quantity)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </mat-form-field>
+            <span *ngIf="quantity >= quantityLimit"
+              class="pl-2 text-danger">
+              max purchase limit {{quantityLimit}}
+            </span>
+          </div>
+          <!-- seller -->
+          <div class="d-flex pt-1">
+            <h3 class="text-secondary p-0 m-0"><strong>Seller : </strong>
+            {{product.user.name}}</h3>
+          </div>
+          <!-- description -->
+          <div class="d-flex flex-wrap pt-1 ">
+          <div class="pr-3 pb-1 text-secondary"><strong>Description</strong></div>
+          <div>
+            <p>{{product.description.short}}</p>
+          </div>
+          </div>
+          <!-- other product detail long description/ summary, featues & reviews -->
+          <div class="row w-100 p-0 m-0">
+            <!-- other details -->
+            <div class="col-12 w-100 p-0 m-0">
+              <div class="d-flex w-100 justify-content-center justify-content-md-start">
+                <mat-tab-group class="w-100">
+                  <!-- features -->
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      features
+                    </ng-template>
+                    <div class="feature-table px-3">
+                      <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                          <thead class="thead-light">
+                            <tr>
+                              <td>features</td>
+                              <td>value</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let feature of product.description.features">
+                              <td>{{feature.title}}</td>
+                              <td>{{feature.value}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </mat-tab>
+                  <!-- long description -->
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      Summary
+                    </ng-template>
+                    <div class="p-3">
+                      <p class="text-secondary p-0 m-0">{{product.description.long}}</p>
+                    </div>
+                  </mat-tab>
+                  <!-- review -->
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      Reviews
+                    </ng-template>
+                    <div class="p-3">
+                      <p class="text-secondary p-0 m-0">review</p>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+        <!--  -->
+      </div>
+    </div>
+    <!--  -->
+        <!-- related products -->
+        <div *ngIf="relatedProducts?.length > 0" class="col-12 p-0 m-0 bg-light">
+          <h2 class="p-2 w-100 shadow-sm text-center text-primary"> Related Products</h2>
+          <div class=" my-3">
+            <!-- heading -->
+            <div class>
+              <div class="row p-0 m-0 d-flex justify-content-center">
+                <div class="col-12 mb-2 col-sm-6 col-md-3 col-lg-2" *ngFor="let rProduct of relatedProducts">
+                  <mat-card class="related-card">
+                    <!-- image -->
+                    <div class="d-flex justify-content-center">
+                      <img  [src]="rProduct.image.main"
+                            [routerLink]="['/product', rProduct._id]">
+                    </div>
+                    <!-- details -->
+                    <div>
+                      <h4 class="text-center m-0  textPrimary"
+                          [routerLink]="['/product', rProduct._id]">
+                        <strong>{{rProduct.name}}</strong>
+                      </h4>
+                      <h3 class=" text-center m-0 textPrimary">
+                        {{rProduct.price | currency: 'INR'}}
+                      </h3>
+                    </div>
+                    <!-- actions -->
+                    <div>
+                      <div class="d-flex justify-content-center">
+                        <button mat-mini-fab class="mx-2">
+                          <mat-icon>add_shopping_cart</mat-icon>
+                        </button>
+                        <button mat-mini-fab class="mx-2">
+                          <mat-icon>payment</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+            <!-- content -->
+            <div>
+            </div>
+          </div>
+        </div>
+    <!--  -->
+  </div>
+</div>
