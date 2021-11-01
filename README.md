@@ -1,5 +1,5 @@
 # Website under development 
-xbard.com(ecommerce)
+xbard.com(https://ecommerce-xbard-com.web.app)
 
 # front-end
 angular 9.0
